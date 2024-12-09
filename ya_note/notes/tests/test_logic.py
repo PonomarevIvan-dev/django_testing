@@ -1,3 +1,10 @@
+"""
+Модуль тестов для проверки маршрутов приложения заметок.
+
+Содержит тесты, проверяющие доступность маршрутов, их поведение
+для авторизованных и неавторизованных пользователей, а также
+корректность обработки данных.
+"""
 from http import HTTPStatus
 
 from django.contrib.auth import get_user_model
@@ -13,6 +20,7 @@ User = get_user_model()
 
 
 class TestRoutes(TestCase):
+    """Тесты для проверки маршрутов и функциональности приложения заметок."""
 
     @classmethod
     def setUpTestData(cls):
@@ -68,10 +76,7 @@ class TestRoutes(TestCase):
         self.assertEqual(Note.objects.count(), 1)
 
     def test_empty_slug(self):
-        """
-        Если при создании заметки не заполнен slug, то он формируется
-        автоматически, с помощью функции pytils.translit.slugify.
-        """
+        """Если не заполнен slug, то он формируется автоматически."""
         url = reverse('notes:add')
         self.data.pop('slug')
         response = self.author_client.post(url, self.data)

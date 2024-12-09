@@ -1,3 +1,4 @@
+"""Проверка функциональности главной страницы и страницы подробностей."""
 from django.conf import settings
 from django.urls import reverse
 
@@ -16,8 +17,7 @@ def test_news_count(client, list_news):
 
 @pytest.mark.django_db
 def test_news_order(client, list_news):
-    """Новости отсортированы от самой свежей к самой старой.
-    Свежие новости в начале списка."""
+    """Новости отсортированы от самой свежей к самой старой."""
     url = reverse('news:home')
     response = client.get(url)
     object_list = response.context['object_list']
@@ -28,8 +28,7 @@ def test_news_order(client, list_news):
 
 @pytest.mark.django_db
 def test_comments_order(client, news, list_comments):
-    """Комментарии на странице отдельной новости отсортированы в
-    хронологическом порядке: старые в начале списка, новые — в конце."""
+    """Сортировка комментариев: старые в начале, новые — в конце."""
     url = reverse('news:detail', args=(news.id,))
     response = client.get(url)
     assert 'news' in response.context
@@ -47,10 +46,7 @@ def test_comments_order(client, news, list_comments):
 )
 @pytest.mark.django_db
 def test_anonymous_client_has_no_form(parametrized_client, status, comment):
-    """Анонимному пользователю недоступна форма для отправки
-    комментария на странице отдельной новости.
-    Авторизованному пользователю доступна форма для отправки
-    комментария на странице отдельной новости."""
+    """Анонимному пользователю недоступна форма для отправки комментария."""
     url = reverse('news:detail', args=(comment.id,))
     response = parametrized_client.get(url)
     assert ('form' in response.context) is status

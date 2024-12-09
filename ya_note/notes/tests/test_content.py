@@ -1,3 +1,10 @@
+"""
+Модуль тестов для проверки маршрутов приложения заметок.
+
+Содержит тесты, проверяющие отображение списка заметок, доступность форм
+на страницах создания и редактирования заметок,
+а также их корректное поведение.
+"""
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -8,9 +15,11 @@ User = get_user_model()
 
 
 class TestRoutes(TestCase):
+    """Тесты для проверки маршрутов и функциональности приложения заметок."""
 
     @classmethod
     def setUpTestData(cls):
+        """Настройка данных, общих для всех тестов в этом классе."""
         cls.author = User.objects.create(username='author')
         cls.author_client = Client()
         cls.author_client.force_login(cls.author)
@@ -24,13 +33,7 @@ class TestRoutes(TestCase):
         )
 
     def test_notes_list_for_different_users(self):
-        """
-        Отдельная заметка передаётся на страницу со списком заметок
-        в списке object_list в словаре context.
-        В список заметок одного пользователя не попадают заметки
-        другого пользователя.
-        """
-
+        """Проверяет отображение списка заметок для разных пользователей."""
         users_statuses = (
             (self.author_client, True),
             (self.auth_user_client, False),
