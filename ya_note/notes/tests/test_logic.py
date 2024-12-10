@@ -61,7 +61,7 @@ class TestRoutes(TestCase):
         self.assertRedirects(response, self.NOTES_SUCCESS_URL)
         self.assertEqual(Note.objects.count(), 2)
         new_note = Note.objects.exclude(id=self.note.id).get()
-        self.assertNoteEqual(new_note, self.data)
+        self.assert_note_equal(new_note, self.data)
         self.assertEqual(new_note.author, self.author)
 
     def test_anonymous_user_cant_create_note(self):
@@ -111,7 +111,7 @@ class TestRoutes(TestCase):
         response = self.author_client.post(url, self.data)
         self.assertRedirects(response, self.NOTES_SUCCESS_URL)
         self.note.refresh_from_db()
-        self.assertNoteEqual(self.note, self.data)
+        self.assert_note_equal(self.note, self.data)
 
     def test_other_user_cant_edit_note(self):
         """Пользователь не может редактировать чужие заметки."""
