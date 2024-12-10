@@ -7,10 +7,10 @@
 """
 from datetime import datetime, timedelta
 
+import pytest
+
 from django.conf import settings
 from django.utils import timezone
-
-import pytest
 
 from news.models import News, Comment
 
@@ -77,7 +77,7 @@ def list_news():
 def list_comments(news, author):
     """Создаём список комментариев."""
     now, list_comment = timezone.now(), []
-    for index in range(2):
+    for index in range(10):
         comment = Comment.objects.create(
             text='Текст {index}',
             news=news,

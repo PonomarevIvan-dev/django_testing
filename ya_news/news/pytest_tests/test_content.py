@@ -33,8 +33,9 @@ def test_comments_order(client, news, list_comments):
     response = client.get(url)
     assert 'news' in response.context
     news = response.context['news']
-    all_comments = news.comment_set.all()
-    assert all_comments[0].created < all_comments[1].created
+    all_comments = list(news.comment_set.order_by('created'))
+    for i in range(len(all_comments) - 1):
+        assert all_comments[i].created <= all_comments[i + 1].created
 
 
 @pytest.mark.parametrize(

@@ -1,11 +1,11 @@
 """Доступные операции для анонимных и авторизованных пользователей."""
 from http import HTTPStatus
 
-from django.urls import reverse
-
 import pytest
 
 from pytest_django.asserts import assertRedirects
+
+from django.urls import reverse
 
 
 @pytest.mark.django_db

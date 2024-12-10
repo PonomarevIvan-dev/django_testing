@@ -1,11 +1,11 @@
 """Тесты для проверки функциональности комментариев в приложении новостей."""
 from http import HTTPStatus
 
-from django.urls import reverse
-
 import pytest
 
 from pytest_django.asserts import assertRedirects, assertFormError
+
+from django.urls import reverse
 
 from conftest import TEXT_COMMENT
 from news.forms import BAD_WORDS, WARNING
